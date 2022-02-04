@@ -36,11 +36,11 @@
 
 <a href="https://github.com/elcodee/Streamingin">
   <center>
-    <img src="/streamingin - home.png" alt="Logo" width="auto" height="350">
+    <img src="/streamingin-home.png" alt="Logo" width="auto" height="350">
   </center>
   </a>
 
-This is my project about a web-based chat application
+This is my project about a web-based premium account seller
 
 ## Technology Used
 
