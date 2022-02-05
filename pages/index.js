@@ -13,7 +13,7 @@ export default function Home() {
 
   const getProductsData = async () => {
     const res = await getProducts();
-    setProducts(res.data);
+    setProducts(res?.data);
 
     if (products) {
       setTimeout(() => {
@@ -25,7 +25,8 @@ export default function Home() {
   useEffect(() => {
     getProductsData();
     localStorage.removeItem("orders");
-  }, []);
+  });
+  
   return (
     <>
       <MenuLayout>
@@ -52,6 +53,7 @@ export default function Home() {
               src="/assets/img/setreamingin-icon.png"
               width={100}
               height={100}
+              alt=""
               style={{ display: "block", margin: "0 auto" }}
             />
             <Text h3>STREAMINGIN</Text>

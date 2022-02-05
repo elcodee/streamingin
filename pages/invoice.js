@@ -1,20 +1,6 @@
 import MenuLayout from "../components/MenuLayout";
 import { Breadcrumb, Tag, Alert } from "antd";
-import CardLanding from "../components/atom/CardLanding";
-import {
-  Card,
-  Text,
-  Row,
-  Collapse,
-  Col,
-  Button,
-  Modal,
-  Input,
-  Checkbox,
-  Mail,
-  Password,
-  Divider,
-} from "@nextui-org/react";
+import { Card, Text, Row, Col, Button } from "@nextui-org/react";
 import { WhatsAppOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -33,11 +19,9 @@ export default function Invoice() {
     }
   };
 
-  console.log("ORDER : ", order);
-
   useEffect(() => {
     getDataOrder();
-  }, []);
+  });
 
   return (
     <>
@@ -54,6 +38,7 @@ export default function Invoice() {
               src="/assets/img/setreamingin-icon.png"
               width={35}
               height={35}
+              alt=""
               style={{ display: "block", margin: "0 auto", marginTop: "1em" }}
             />
           </Row>

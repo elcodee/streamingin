@@ -25,10 +25,10 @@ import { UserContext } from "../../contex/user";
 
 export default function Admin() {
   const [loading, setLoading] = useState(false);
-  const { dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
   const router = useRouter();
 
-  const checkauth = async () => {
+  const checkAuth = async () => {
     if (JSON.parse(localStorage.getItem("adminAuth"))?.isLogin) {
       dispatch({
         type: "AUTH_SUCCESS",
@@ -40,8 +40,9 @@ export default function Admin() {
   };
 
   useEffect(() => {
-    checkauth();
-  }, []);
+    checkAuth();
+  });
+
   return (
     <>
       <MenuLayout>
@@ -120,7 +121,7 @@ export default function Admin() {
               <Text css={{ color: "black" }} span>
                 128 Pesanan
               </Text>
-              <Link href={`/admin/orders/success`}>
+              <Link passHref href={`/admin/orders/success`}>
                 <Button flat color="success" size="xs" css={{ mt: "1em" }}>
                   CEK
                 </Button>
@@ -140,7 +141,7 @@ export default function Admin() {
               <Text css={{ color: "black" }} span>
                 39 Pesanan
               </Text>
-              <Link href={`/admin/orders/process`}>
+              <Link passHref href={`/admin/orders/process`}>
                 <Button flat color="default" size="xs" css={{ mt: "1em" }}>
                   CEK
                 </Button>
@@ -160,7 +161,7 @@ export default function Admin() {
               <Text css={{ color: "black" }} span>
                 19 Pesanan
               </Text>
-              <Link href={`/admin/orders/pending`}>
+              <Link passHref href={`/admin/orders/pending`}>
                 <Button flat color="warning" size="xs" css={{ mt: "1em" }}>
                   CEK
                 </Button>
@@ -180,7 +181,7 @@ export default function Admin() {
               <Text css={{ color: "black" }} span>
                 8 Pesanan
               </Text>
-              <Link href={`/admin/orders/cancel`}>
+              <Link passHref href={`/admin/orders/cancel`}>
                 <Button flat color="error" size="xs" css={{ mt: "1em" }}>
                   CEK
                 </Button>

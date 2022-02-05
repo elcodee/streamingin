@@ -38,6 +38,7 @@ export default function Order() {
   };
 
   console.log("DATA : ", data);
+  localStorage.removeItem("orders");
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -91,10 +92,6 @@ export default function Order() {
       </Collapse>
     </>
   );
-
-  useEffect(() => {
-    localStorage.removeItem("orders");
-  }, []);
 
   return (
     <>

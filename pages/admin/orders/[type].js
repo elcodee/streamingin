@@ -41,9 +41,8 @@ export default function Orders() {
       [e.target.name]: e.target.value,
     });
   };
-
-  const checkauth = async () => {
-    if (JSON.parse(localStorage.getItem("adminAuth"))?.isLogin) {
+  const checkAuth = async () => {
+    if (JSON.parse(localStorage.getItem("adminAuth")).isLogin) {
       dispatch({
         type: "AUTH_SUCCESS",
         userData: JSON.parse(localStorage.getItem("adminAuth")),
@@ -54,12 +53,12 @@ export default function Orders() {
   };
 
   useEffect(() => {
-    checkauth();
-  }, []);
+    checkAuth();
+  });
   return (
     <>
       <MenuLayout>
-        <Link href="/admin">
+        <Link passHref href="/admin">
           <Button flat color="primary" size="xs" css={{ mt: "1.5em" }}>
             <ArrowLeftOutlined />
             &nbsp; Kembali

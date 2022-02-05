@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { Alert } from "antd";
 import { useRouter } from "next/router";
 import { UserContext } from "../../contex/user";
+import { loginAction } from "../../req/auth";
 
 export default function Home() {
   const [dataLogin, setDataLogin] = useState({});
@@ -21,9 +22,9 @@ export default function Home() {
     });
   };
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     setLoading(true);
-    setTimeout(() => {
+    setTimeout(async () => {
       if (!dataLogin.email || !dataLogin.password) {
         setIsError(true);
         setTimeout(() => {
@@ -31,16 +32,21 @@ export default function Home() {
         }, 6000);
         setLoading(false);
       } else {
-        dispatch({
-          type: "LOGIN",
-          payload: {
-            isLogin: true,
-            userData: dataLogin,
-          },
-        });
+        const res = await loginAction(dataLogin);
+        console.log("RES LOGIN : ", res);
 
-        router.push("/admin", undefined, { shallow: true });
-        setLoading(false);
+        if (res?.data?.status) {
+          dispatch({
+            type: "LOGIN",
+            payload: {
+              isLogin: true,
+              userData: dataLogin,
+            },
+          });
+
+          router.push("/admin", undefined, { shallow: true });
+          setLoading(false);
+        }
       }
     }, 3000);
   };
