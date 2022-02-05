@@ -37,10 +37,10 @@ export default function Order() {
     }
   };
 
-  console.log("DATA : ", data);
-  localStorage.removeItem("orders");
-
   const handleSubmit = async () => {
+    if (localStorage.getItem("orders")) {
+      localStorage.removeItem("orders");
+    }
     setLoading(true);
 
     if (!data.order_code || data?.order_code.length < 7) {
