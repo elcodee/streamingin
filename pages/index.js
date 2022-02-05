@@ -11,22 +11,21 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getProductsData = async () => {
-    const res = await getProducts();
-    setProducts(res?.data);
-
-    if (products) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-    }
-  };
-
   useEffect(() => {
-    getProductsData();
     localStorage.removeItem("orders");
-  });
-  
+    const getProductsData = async () => {
+      const res = await getProducts();
+      setProducts(res?.data);
+
+      if (products) {
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+      }
+    };
+    getProductsData();
+  }, []);
+
   return (
     <>
       <MenuLayout>

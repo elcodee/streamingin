@@ -38,9 +38,6 @@ export default function Order() {
   };
 
   const handleSubmit = async () => {
-    if (localStorage.getItem("orders")) {
-      localStorage.removeItem("orders");
-    }
     setLoading(true);
 
     if (!data.order_code || data?.order_code.length < 7) {
@@ -92,6 +89,14 @@ export default function Order() {
       </Collapse>
     </>
   );
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("orders")) {
+  //     localStorage.removeItem("orders");
+  //   } else {
+  //     return null;
+  //   }
+  // }, []);
 
   return (
     <>

@@ -21,7 +21,7 @@ export default function Invoice() {
 
   useEffect(() => {
     getDataOrder();
-  });
+  }, []);
 
   return (
     <>
