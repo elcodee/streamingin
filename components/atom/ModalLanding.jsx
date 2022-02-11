@@ -68,32 +68,34 @@ export default function ModalLanding({ price, category, name, desc }) {
       }
     }, 1500);
 
-    setTimeout(async () => {
-      if (
-        inputs.nama_pembeli &&
-        inputs.no_whatsapp &&
-        inputs.payment &&
-        inputs.price &&
-        inputs.product
-      ) {
-        const params = {
-          kode_order: `#${inputs.kode_order}`,
-          nama_pembeli: inputs.nama_pembeli,
-          no_whatsapp: inputs.no_whatsapp,
-          payment: inputs.payment,
-          price: inputs.price.toString(),
-          product: inputs.product,
-          status: "PENDING",
-        };
+    if (
+      inputs.nama_pembeli &&
+      inputs.no_whatsapp &&
+      inputs.payment &&
+      inputs.price &&
+      inputs.product
+    ) {
+      const params = {
+        kode_order: `#${inputs.kode_order}`,
+        nama_pembeli: inputs.nama_pembeli,
+        no_whatsapp: inputs.no_whatsapp,
+        payment: inputs.payment,
+        price: inputs.price.toString(),
+        product: inputs.product,
+        status: "PENDING",
+      };
 
-        const res = await postOrder(params);
-        console.log("RES ORDER : ", res);
-        localStorage.setItem("orders", JSON.stringify(inputs));
-        setLoading(false);
-        // closeHandler();
-        // router.push("/invoice", undefined, { shallow: true });
+      const res = await postOrder(params);
+      if (res) {
+        setTimeout(() => {
+          localStorage.setItem("orders", JSON.stringify(inputs));
+          setLoading(false);
+          router.push("/invoice", undefined, { shallow: true });
+        }, 3000);
       }
-    }, 3000);
+      // console.log("RES ORDER : ", res);
+      // closeHandler();
+    }
   };
 
   return (

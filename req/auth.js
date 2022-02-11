@@ -1,14 +1,11 @@
-import axios from "axios";
-import { baseURL } from "./config";
+import { API } from "./config";
 
 export const loginAction = async (params) => {
   try {
-    let response = await axios.post(`${baseURL}/login`, params, {
-      xsrfHeaderName: "X-XSRF-TOKEN", // change the name of the header to "X-XSRF-TOKEN" and it should works
-      withCredentials: true,
-    });
+    let response = await API.post("/login", params);
+    // console.log("RES ADD ORDER", response);
     return response?.data;
   } catch (error) {
-    console.log("ERR CONFIG GET PRODUCT");
+    console.log("ERR CONFIG LOGIN", error);
   }
 };

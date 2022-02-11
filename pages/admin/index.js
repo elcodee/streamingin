@@ -28,20 +28,53 @@ export default function Admin() {
   const { state, dispatch } = useContext(UserContext);
   const router = useRouter();
 
+  const handleDone = async () => {
+    const data = {
+      ...JSON.parse(localStorage.getItem("adminAuth")),
+      type: "DONE",
+    };
+    localStorage.setItem("adminAuth", JSON.stringify(data));
+  };
+
+  const handleProcess = async () => {
+    const data = {
+      ...JSON.parse(localStorage.getItem("adminAuth")),
+      type: "PROCESS",
+    };
+    localStorage.setItem("adminAuth", JSON.stringify(data));
+  };
+
+  const handlePending = async () => {
+    const data = {
+      ...JSON.parse(localStorage.getItem("adminAuth")),
+      type: "PENDING",
+    };
+    localStorage.setItem("adminAuth", JSON.stringify(data));
+  };
+
+  const handleCancel = async () => {
+    const data = {
+      ...JSON.parse(localStorage.getItem("adminAuth")),
+      type: "CANCEL",
+    };
+    localStorage.setItem("adminAuth", JSON.stringify(data));
+  };
+
   const checkAuth = async () => {
-    if (JSON.parse(localStorage.getItem("adminAuth"))?.isLogin) {
+    if (JSON.parse(localStorage.getItem("adminAuth"))?.status) {
       dispatch({
-        type: "AUTH_SUCCESS",
-        userData: JSON.parse(localStorage.getItem("adminAuth")),
+        type: "LOGIN",
+        userData: JSON.parse(localStorage.getItem("adminAuth"))?.user,
       });
     } else {
+      localStorage.removeItem("adminAuth");
       router.push("/auth/login", undefined, { shallow: true });
     }
   };
 
   useEffect(() => {
     checkAuth();
-  });
+  }, []);
 
   return (
     <>
@@ -121,8 +154,14 @@ export default function Admin() {
               <Text css={{ color: "black" }} span>
                 128 Pesanan
               </Text>
-              <Link passHref href={`/admin/orders/success`}>
-                <Button flat color="success" size="xs" css={{ mt: "1em" }}>
+              <Link passHref href={`/admin/orders/DONE`}>
+                <Button
+                  flat
+                  color="success"
+                  size="xs"
+                  css={{ mt: "1em" }}
+                  onClick={() => handleDone()}
+                >
                   CEK
                 </Button>
               </Link>
@@ -141,8 +180,14 @@ export default function Admin() {
               <Text css={{ color: "black" }} span>
                 39 Pesanan
               </Text>
-              <Link passHref href={`/admin/orders/process`}>
-                <Button flat color="default" size="xs" css={{ mt: "1em" }}>
+              <Link passHref href={`/admin/orders/PROCESS`}>
+                <Button
+                  flat
+                  color="default"
+                  size="xs"
+                  css={{ mt: "1em" }}
+                  onClick={() => handleProcess()}
+                >
                   CEK
                 </Button>
               </Link>
@@ -161,8 +206,14 @@ export default function Admin() {
               <Text css={{ color: "black" }} span>
                 19 Pesanan
               </Text>
-              <Link passHref href={`/admin/orders/pending`}>
-                <Button flat color="warning" size="xs" css={{ mt: "1em" }}>
+              <Link passHref href={`/admin/orders/PENDING`}>
+                <Button
+                  flat
+                  color="warning"
+                  size="xs"
+                  css={{ mt: "1em" }}
+                  onClick={() => handlePending()}
+                >
                   CEK
                 </Button>
               </Link>
@@ -181,8 +232,14 @@ export default function Admin() {
               <Text css={{ color: "black" }} span>
                 8 Pesanan
               </Text>
-              <Link passHref href={`/admin/orders/cancel`}>
-                <Button flat color="error" size="xs" css={{ mt: "1em" }}>
+              <Link passHref href={`/admin/orders/CANCEL`}>
+                <Button
+                  flat
+                  color="error"
+                  size="xs"
+                  css={{ mt: "1em" }}
+                  onClick={() => handleCancel()}
+                >
                   CEK
                 </Button>
               </Link>

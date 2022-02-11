@@ -3,26 +3,33 @@ import CardLanding from "../components/atom/CardLanding";
 import { Card, Text, Loading, Col, Grid } from "@nextui-org/react";
 import Image from "next/image";
 import { getProducts } from "../req/products";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Alert } from "antd";
 import Marquee from "react-fast-marquee";
+import { UserContext } from "../contex/user";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { state, dispatch } = useContext(UserContext);
+
+  const getProductsData = async () => {
+    const res = await getProducts();
+    setProducts(res?.data);
+
+    if (products) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  };
 
   useEffect(() => {
     localStorage.removeItem("orders");
-    const getProductsData = async () => {
-      const res = await getProducts();
-      setProducts(res?.data);
-
-      if (products) {
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
-      }
-    };
+    localStorage.removeItem("adminAuth");
+    dispatch({
+      type: "LOGOUT",
+    });
     getProductsData();
   }, []);
 

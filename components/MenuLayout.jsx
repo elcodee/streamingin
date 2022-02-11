@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import { Text } from "@nextui-org/react";
-import { React, useContext, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import { UserContext } from "../contex/user";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -16,11 +16,29 @@ const { SubMenu } = Menu;
 
 export default function MenuLayout({ children }) {
   const [collapsed, setCollapsed] = useState(true);
-  const { state } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
   };
+
+  const handleLogout = async () => {
+    localStorage.removeItem("adminAuth");
+
+    dispatch({
+      type: "LOGOUT",
+    });
+  };
+
+  useEffect(() => {
+    const handleLogout = async () => {
+      localStorage.removeItem("adminAuth");
+
+      dispatch({
+        type: "LOGOUT",
+      });
+    };
+  }, []);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -49,14 +67,14 @@ export default function MenuLayout({ children }) {
               <Link href="/">S & K</Link>
             </Menu.Item>
           </SubMenu>
-          <Menu.Item key="5" icon={<LoginOutlined />}>
+          {/* <Menu.Item key="5" icon={<LoginOutlined />}>
             <Link href="/admin">Login</Link>
-          </Menu.Item>
+          </Menu.Item> */}
           {state.isLogin ? (
             <Menu.Item
               key="6"
               icon={<LogoutOutlined />}
-              onClick={() => localStorage.removeItem("adminAuth")}
+              onClick={() => handleLogout}
             >
               <Link href="/">Logout</Link>
             </Menu.Item>

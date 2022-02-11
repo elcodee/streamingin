@@ -1,11 +1,10 @@
-import axios from "axios";
-import { baseURL } from "./config";
+import { API } from "./config";
 
 export const getProducts = async () => {
   try {
-    let response = await axios.get(`${baseURL}/products`);
+    let response = await API.get("/products");
     return response?.data;
   } catch (error) {
-    console.log("ERR CONFIG GET PRODUCT");
+    console.log("ERR CONFIG GET PRODUCT", error);
   }
 };

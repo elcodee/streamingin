@@ -11,9 +11,9 @@ export default function Invoice() {
   const router = useRouter();
 
   const getDataOrder = async () => {
-    const order = JSON.parse(localStorage.getItem("orders"));
-    if (order) {
-      setOrder(order);
+    const orders = JSON.parse(localStorage.getItem("orders"));
+    if (orders) {
+      setOrder(orders);
     } else {
       router.push("/", undefined, { shallow: true });
     }
@@ -21,6 +21,10 @@ export default function Invoice() {
 
   useEffect(() => {
     getDataOrder();
+
+    // if (JSON.parse(localStorage.getItem("orders"))) {
+    //   localStorage.removeItem("orders");
+    // }
   }, []);
 
   return (
@@ -79,7 +83,16 @@ export default function Invoice() {
             <Col>
               <Text b>Pembayaran : &nbsp;</Text>
               <Text>
-                <i style={{ color: "blue" }}>GOPAY 081xxxx / An Rama Aditya</i>
+                <i style={{ color: "blue" }}>
+                  {order.payment === "BCA"
+                    ? "BCA | 740 1444 258 A/n Rama Aditya"
+                    : order.payment === "GOPAY"
+                    ? "GOPAY | 0819 3270 9954 A/n Rama Aditya"
+                    : order.payment === "OVO"
+                    ? "OVO | 0819 3270 9954 A/n Rama Aditya"
+                    : order.payment === "DANA" &&
+                      "DANA | 0851 5618 7157 A/n Danar D"}
+                </i>
               </Text>
             </Col>
           </Row>
@@ -87,21 +100,21 @@ export default function Invoice() {
             <Text b>Status : &nbsp;</Text>
             <Text>
               {order.status === "PENDING" ? (
-                <Tag color="warning">
-                  <b>PENDING</b>
+                <Tag color="orange">
+                  <b>MENUNGGU PEMBAYARAN</b>
                 </Tag>
               ) : order.status === "PROCESS" ? (
                 <Tag color="blue">
                   <b>PROSES</b>
                 </Tag>
               ) : order.status === "SUCCESS" ? (
-                <Tag color="success">
+                <Tag color="green">
                   <b>SUCCESS</b>
                 </Tag>
               ) : (
                 order.status === "CANCEL" && (
-                  <Tag color="error">
-                    <b>CANCEL</b>
+                  <Tag color="red">
+                    <b>DIBATALKAN</b>
                   </Tag>
                 )
               )}
@@ -132,6 +145,7 @@ export default function Invoice() {
 
           <a
             href={`https://api.whatsapp.com/send?phone=6285156187157&text=Hallo%20admin%20mau%20kirim%20bukti%20pembayaran%20${order?.product}%20kode%20order%20${order?.kode_order}%20total%20bayar%20Rp${order?.price}%20tolong%20segera%20di%20proses%2C%20terima%20kasih`}
+            target="tab"
           >
             <Button
               size="lg"

@@ -13,7 +13,7 @@ export default function Home() {
   const [isError, setIsError] = useState(false);
   const router = useRouter();
 
-  const { dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
 
   const handleInputs = async (e) => {
     setDataLogin({
@@ -35,21 +35,29 @@ export default function Home() {
         const res = await loginAction(dataLogin);
         console.log("RES LOGIN : ", res);
 
-        if (res?.data?.status) {
+        if (res?.status) {
           dispatch({
             type: "LOGIN",
-            payload: {
-              isLogin: true,
-              userData: dataLogin,
-            },
+            payload: res.user,
           });
+          const data = { status: res.status, user: res.user };
+          localStorage.setItem("adminAuth", JSON.stringify(data));
 
           router.push("/admin", undefined, { shallow: true });
+          setLoading(false);
+        } else {
+          setIsError(true);
+          setTimeout(() => {
+            localStorage.removeItem("adminAuth");
+            setIsError(false);
+          }, 6000);
           setLoading(false);
         }
       }
     }, 3000);
   };
+
+  console.log("STATE LOGIN PAGE : ", state);
 
   return (
     <>
