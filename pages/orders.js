@@ -70,9 +70,9 @@ export default function Order() {
     }
   };
 
-  useEffect(() => {
-    localStorage.removeItem("orders");
-  }, []);
+  // useEffect(() => {
+  //   localStorage.removeItem("orders");
+  // }, []);
 
   const orderData = (
     <>
